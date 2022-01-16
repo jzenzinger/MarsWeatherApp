@@ -28,13 +28,13 @@
 
 <script lang="ts">
 
-import { IonPage, IonContent, IonItem, IonLabel, IonSelect, IonSelectOption } from '@ionic/vue';
+import { IonPage, IonContent, IonGrid, IonCol, IonRow } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import RoverCard from "@/components/RoverCard.vue";
 
 export default defineComponent({
   name: 'Tab1',
-  components: {RoverCard, IonContent, IonPage, /*IonItem, IonLabel, IonSelect, IonSelectOption*/ },
+  components: {RoverCard, IonContent, IonPage, IonGrid, IonCol, IonRow,  /*IonItem, IonLabel, IonSelect, IonSelectOption*/ },
   data() {
     return {
       photosArr: [],
@@ -66,7 +66,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.ion-page {
+ion-page {
   --ion-background-color: linear-gradient(0deg, rgba(54,10,2,1) 0%, rgba(143,47,32,1) 62%, rgba(207,55,10,1) 100%);
 }
 ion-card {
