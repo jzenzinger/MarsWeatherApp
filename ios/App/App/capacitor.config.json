@@ -1,0 +1,6 @@
+{
+	"appId": "com.whatmars.app",
+	"appName": "WhatMars",
+	"webDir": "public",
+	"bundledWebRuntime": false
+}

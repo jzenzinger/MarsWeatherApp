@@ -3,7 +3,7 @@ Mars weather app is native iOS mobile application with 3 tabs. App is built with
 ### Technologies
 * Ionic Framework
 * Vue.js
-* Typescript
+* TypeScript
 * Capacitor
 * Native iOS development
 ***

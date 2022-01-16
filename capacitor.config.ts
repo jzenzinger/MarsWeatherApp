@@ -1,9 +1,9 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'MarsWeatherApp',
-  webDir: 'dist',
+  appId: 'com.whatmars.app',
+  appName: 'WhatMars',
+  webDir: 'public',
   bundledWebRuntime: false
 };
 
