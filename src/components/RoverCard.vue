@@ -7,40 +7,35 @@
       <ion-card-subtitle><ion-icon :icon="calendar"></ion-icon> {{ startDate }}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
-      <ion-img :src="imgSrc" @click="toggleModalOpen"></ion-img>
+      <ion-img :src="imgSrc" @click="setOpen(true)"></ion-img>
+      <ion-modal :is-open="isModalOpen"
+                 :swipe-to-close="true"
+                 :breakpoints="[0.1, 0.5, 1]"
+                 :initialBreakpoint="0.5"
+                 @didDismiss="setOpen(false)">
+        <ImageModal :img-src-modal="imgSrc"></ImageModal>
+      </ion-modal>
     </ion-card-content>
   </ion-card>
-  <div v-if="isModalOpen">
-    <ion-modal :is-open="isModalOpen" :swipe-to-close="true" :fullscreen="true">
-      <ng-template>
-        <app-modal-content>
-          <ion-img :src="imgSrc"></ion-img>
-        </app-modal-content>
-      </ng-template>
-    </ion-modal>
-  </div>
 </template>
 
 <script lang="ts">
 
 import { camera, car, calendar } from 'ionicons/icons';
-import {defineComponent} from "vue";
+import { defineComponent, ref } from "vue";
+import ImageModal from "@/components/ImageModal.vue";
+import { IonModal, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonIcon, IonImg, IonCardContent } from "@ionic/vue";
 
 export default defineComponent( {
   name: "RoverCard",
+  components: { ImageModal, IonModal, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonIcon, IonImg, IonCardContent },
   props: ['camFullName', 'cameraSubtitle', 'roverSubtitle', 'imgSrc', 'startDate'],
-  data() {
-    return {
-      isModalOpen: false,
-    };
-  },
-  methods: {
-    toggleModalOpen() {
-      this.isModalOpen = !this.isModalOpen;
-    },
-  },
   setup() {
+    const isModalOpen = ref(false);
+    const setOpen = (state: boolean) => isModalOpen.value = state;
     return {
+      isModalOpen,
+      setOpen,
       camera,
       car,
       calendar

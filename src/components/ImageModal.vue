@@ -1,21 +1,22 @@
 <template>
-  <ion-modal [isOpen]="{{ isModalOpen }}" :swipe-to-close="true">
-    <ng-template>
-      <app-modal-content>
-        <ion-img :src="imgSrc"></ion-img>
-      </app-modal-content>
-    </ng-template>
-  </ion-modal>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title> Rover picture</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <ion-img :src="imgSrcModal"></ion-img>
+  </ion-content>
 </template>
 
 <script lang="ts">
 
-export default {
+import { defineComponent } from "vue";
+import { IonHeader, IonTitle, IonToolbar, IonContent } from "@ionic/vue";
+
+export default defineComponent({
   name: "ImageModal",
-  props: ['isModalOpen', 'imgSrc']
-}
+  props: ['imgSrcModal'],
+  components: { IonHeader, IonTitle, IonToolbar, IonContent },
+});
 </script>
-
-<style scoped>
-
-</style>

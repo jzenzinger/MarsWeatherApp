@@ -1,18 +1,18 @@
 <template>
   <ion-page>
-    <ion-content :fullscreen="true">
+    <ion-content>
       <!--<ion-item v-if="loaded">
         <ion-label>Select camera</ion-label>
         <ion-select v-for="cam in camerasArr" :key="cam.id" >
           <ion-select-option value="{{ cam.camera.name }}">{{ cam.camera.name }}</ion-select-option>
         </ion-select>
       </ion-item>-->
-      <ion-grid>
-        <ion-row>
+      <ion-grid class="ion-margin-top">
+        <ion-row class="ion-align-items-center">
           <!-- Components template to render pictures in-->
-          <ion-col size="6" v-for="(pic, index) in photosArr" :key="pic.id">
+          <ion-col size="12" v-for="(pic, index) in photosArr" :key="pic.id">
             <!-- Loading only first 25 photos from photosArr -->
-            <RoverCard v-if="index <= 50" class="photos"
+            <RoverCard v-if="index <= 25" class="photos"
                        :cam-full-name="pic.camera.full_name"
                        :camera-subtitle="pic.camera.name"
                        :rover-subtitle="pic.rover.name"
@@ -53,6 +53,9 @@ export default defineComponent({
     },
     pushArray(arr1: any[], arr2: any[]) {
       arr1.push(arr2);
+      for(let i = 0; i < arr1.length; i++) {
+        console.log(arr1[i].camera.name);
+      }
     },
     getUniqueValues(arr: any[]) {
       arr = arr.filter((v, i, a) => a.indexOf(v) === i);
@@ -66,10 +69,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-ion-page {
+.ion-page {
   --ion-background-color: linear-gradient(0deg, rgba(54,10,2,1) 0%, rgba(143,47,32,1) 62%, rgba(207,55,10,1) 100%);
-}
-ion-card {
-  margin: 15px;
 }
 </style>

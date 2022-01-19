@@ -3,7 +3,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'com.whatmars.app',
   appName: 'WhatMars',
-  webDir: 'public',
+  webDir: 'dist',
   bundledWebRuntime: false
 };
 
