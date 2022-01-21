@@ -5,22 +5,31 @@
         <ion-title>Weather</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content :fullscreen="true">
+    <ion-content :fullscreen="true" class="ion-margin">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">Weather</ion-title>
+          <ion-title size="large">Astronomy Picture Of Day</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-grid class="ion-padding-lg">
+      <ion-grid class="ion-padding">
         <ion-row class="ion-align-items-center">
           <ion-col>
-            <ion-button color="dark" v-on:click="fetchWeatherData">Get Weather</ion-button>
+            <ion-button color="dark" @click="fetchApodData">Get APOD</ion-button>
           </ion-col>
         </ion-row>
+        <ion-row class="ion-text-center">
+          <ion-title>{{ apodArr.title }}</ion-title>
+        </ion-row>
         <ion-row>
-          <ion-col v-for="arr in weatherArr" :key = arr.id>
-            {{ arr }}
+          <ion-col>
+            {{ apodArr.date }}
           </ion-col>
+          <ion-col>
+            {{ apodArr.explanation }}
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-padding">
+          <ion-img :src="apodArr.url"></ion-img>
         </ion-row>
       </ion-grid>
     </ion-content>
@@ -36,15 +45,15 @@ export default defineComponent({
   components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonGrid, IonRow, IonCol },
   data() {
     return {
-      weatherArr: []
+      apodArr: []
     }
   },
   methods: {
-    async fetchWeatherData() {
-      const url = 'https://api.nasa.gov/insight_weather/?api_key=WpJlub0x6H6V2V5s4ryXm2j7LTES4HRhGrpAdPi2&feedtype=json&ver=1.0';
+    async fetchApodData() {
+      const url = 'https://api.nasa.gov/planetary/apod?api_key=WpJlub0x6H6V2V5s4ryXm2j7LTES4HRhGrpAdPi2';
       fetch(url)
           .then(res => res.json())
-          .then(data => this.weatherArr = data)
+          .then(data => this.apodArr = data)
           .catch(err => console.log(err.message))
     }
   }
