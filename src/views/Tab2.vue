@@ -1,26 +1,20 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Astronomy Picture Of Day</ion-title>
-      </ion-toolbar>
-    </ion-header>
     <ion-content :fullscreen="true" class="ion-margin">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Astronomy Picture Of Day</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-grid>
+      <ion-grid class="ion-padding">
         <ion-row class="ion-text-center" v-if="loaded === false">
-          <ion-button color="dark" @click="fetchApodData">Get APOD</ion-button>
+          <ion-col class="ion-text-start">
+            <ion-button color="dark" @click="fetchApodData">Get APOD</ion-button>
+          </ion-col>
         </ion-row>
       </ion-grid>
       <ion-grid class="ion-padding" v-if="loaded">
-        <ion-row class="ion-text-center">
-          <ion-title>{{ apodArr.title }}</ion-title>
+        <ion-row class="ion-text-start">
+          <ion-col>
+            <ion-title>{{ apodArr.title }}</ion-title>
+          </ion-col>
         </ion-row>
-        <ion-row class="ion-padding">
+        <ion-row class="ion-padding-top">
           <ion-img :src="apodArr.url"></ion-img>
         </ion-row>
         <ion-row class="ion-padding-top ion-padding-start">
@@ -35,13 +29,13 @@
 </template>
 
 <script lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonIcon } from '@ionic/vue';
+import { IonPage, IonTitle, IonContent, IonGrid, IonRow, IonIcon } from '@ionic/vue';
 import {defineComponent} from "vue";
 import { calendar } from "ionicons/icons";
 
 export default defineComponent({
   name: 'Tab2',
-  components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonGrid, IonRow, IonIcon },
+  components: { IonTitle, IonContent, IonPage, IonGrid, IonRow, IonIcon },
   data() {
     return {
       apodArr: [],
