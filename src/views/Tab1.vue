@@ -3,7 +3,7 @@
     <ion-content :scroll-event="true" class="ion-padding-top" ref="myContent">
       <!-- fab placed to the bottom end -->
       <ion-fab vertical="bottom" horizontal="end" slot="fixed" @click="handleFabClick">
-        <ion-fab-button @click="handleFabClick">
+        <ion-fab-button @click="handleFabClick" color="primary">
           <ion-icon :icon="arrowUpCircle"></ion-icon>
         </ion-fab-button>
       </ion-fab>
@@ -17,22 +17,41 @@
           </ion-select-option>
         </ion-select>
       </ion-item>
-      <ion-content v-if="loaded === false" class="ion-padding">
-        <ion-label class="ion-text-center"> Select which camera you want to see.</ion-label>
-      </ion-content>
+      <!-- Grid If camera isn't selected -->
+      <ion-grid v-if="loaded === false" class="ion-padding">
+        <ion-row class="ion-text-center">
+          <ion-textarea> Select which camera you want to see.</ion-textarea>
+        </ion-row>
+      </ion-grid>
+      <!-- Grid If camera is selected -->
       <ion-grid v-if="loaded">
         <ion-row class="ion-align-items-center" v-for="pic in photosArr" :key="pic.id">
           <!-- Components template to render pictures in-->
           <ion-col size="12" v-if="selectedCam === pic.camera.name">
-            <!-- Loading only cards from photosArr by selected camera -->
-            <!-- Last 2 roversCard ChemCam and NavCam is showing on the down of page and don't know why -->
+            <!-- Selected specific camera name -->
             <RoverCard :cam-full-name="pic.camera.full_name"
                        :camera-subtitle="pic.camera.name"
                        :rover-subtitle="pic.rover.name"
                        :img-src="pic.img_src"
-                       :start-date="pic.rover.launch_date">
+                       :start-date="pic.rover.launch_date"
+                       :array="pic">
             </RoverCard>
           </ion-col>
+          <!-- Selected All -->
+          <ion-col size="12" v-if="selectedCam === 'All'">
+            <!-- Loading only cards from photosArr by selected camera -->
+            <RoverCard :cam-full-name="pic.camera.full_name"
+                       :camera-subtitle="pic.camera.name"
+                       :rover-subtitle="pic.rover.name"
+                       :img-src="pic.img_src"
+                       :start-date="pic.rover.launch_date"
+                       :array="pic">
+            </RoverCard>
+          </ion-col>
+        </ion-row>
+        <!-- Selected None -->
+        <ion-row class="ion-text-center" v-if="selectedCam === 'None'">
+          <ion-textarea> Select which camera you want to see.</ion-textarea>
         </ion-row>
       </ion-grid>
     </ion-content>
@@ -52,7 +71,7 @@ export default defineComponent({
   data() {
     return {
       photosArr: [],
-      cameraArr: [{ name: 'FHAZ'}, { name: 'RHAZ'}, { name:'MAST'}, { name:'NAVCAM'}, { name:'CHEMCAM'}],
+      cameraArr: [{ name: 'None'}, { name: 'All'}, { name: 'FHAZ'}, { name: 'RHAZ'}, { name:'MAST'}, { name:'NAVCAM'}, { name:'CHEMCAM'}],
       selectedCam: String,
       loaded: false,
     };
@@ -69,11 +88,14 @@ export default defineComponent({
       this.loaded = true;
     },
     handleFabClick() {
-      (this.$refs.myContent as any).scrollToTop();
-    }
+      // Not working properly as error show scrollToTop function is not defined but in IDE,
+      // but in IDE it is defined as ionic function
+      (this.$refs.myContent as any).scrollToTop(200);
+    },
   },
   mounted() {
     this.fetchRovers();
+    //this.handleFabClick();
   },
   setup() {
     return {
@@ -86,6 +108,7 @@ export default defineComponent({
 <style scoped>
 .ion-page {
   --ion-background-color: linear-gradient(0deg, rgba(54,10,2,1) 0%, rgba(143,47,32,1) 62%, rgba(207,55,10,1) 100%);
+  /*--ion-background-color: url(".././assets/bg-1.jpg");*/
 }
 ion-item {
   --ion-item-background: transparent;

@@ -10,10 +10,9 @@
       <ion-img :src="imgSrc" @click="setOpen(true)"></ion-img>
       <ion-modal :is-open="isModalOpen"
                  :swipe-to-close="true"
-                 :breakpoints="[0.1, 0.5, 1]"
                  :initialBreakpoint="0.5"
                  @didDismiss="setOpen(false)">
-        <ImageModal :img-src-modal="imgSrc"></ImageModal>
+        <ImageModal :img-src-modal="imgSrc" :array-pic="array"></ImageModal>
       </ion-modal>
     </ion-card-content>
   </ion-card>
@@ -29,7 +28,7 @@ import { IonModal, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonIco
 export default defineComponent( {
   name: "RoverCard",
   components: { ImageModal, IonModal, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonIcon, IonImg, IonCardContent },
-  props: ['camFullName', 'cameraSubtitle', 'roverSubtitle', 'imgSrc', 'startDate'],
+  props: ['camFullName', 'cameraSubtitle', 'roverSubtitle', 'imgSrc', 'startDate', 'array'],
   setup() {
     const isModalOpen = ref(false);
     const setOpen = (state: boolean) => isModalOpen.value = state;
