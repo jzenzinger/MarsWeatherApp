@@ -12,6 +12,10 @@
           <ion-icon :icon="planet"/>
           <ion-label>APOD</ion-label>
         </ion-tab-button>
+        <ion-tab-button tab="tab3" href="/tabs/tab3">
+          <ion-icon :icon="book"/>
+          <ion-label>History</ion-label>
+        </ion-tab-button>
       </ion-tab-bar>
     </ion-tabs>
   </ion-page>
@@ -19,7 +23,7 @@
 
 <script lang="ts">
 import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet } from '@ionic/vue';
-import { planet, car } from 'ionicons/icons';
+import { planet, car, book } from 'ionicons/icons';
 
 export default {
   name: 'Tabs',
@@ -28,6 +32,7 @@ export default {
     return {
       planet,
       car,
+      book
     }
   }
 }

@@ -2,9 +2,9 @@
   <ion-page>
     <ion-content :fullscreen="true" class="ion-margin">
       <ion-grid class="ion-padding">
-        <ion-row class="ion-text-center" v-if="loaded === false">
-          <ion-col class="ion-text-start">
-            <ion-button color="dark" @click="fetchApodData">Get APOD</ion-button>
+        <ion-row class="ion-margin-vertical" v-if="loaded === false">
+          <ion-col class="ion-text-center">
+            <ion-button color="dark" @click="parsePhotos">Get APOD</ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -32,6 +32,7 @@
 import { IonPage, IonTitle, IonContent, IonGrid, IonRow, IonIcon } from '@ionic/vue';
 import {defineComponent} from "vue";
 import { calendar } from "ionicons/icons";
+import { Storage } from "@capacitor/storage";
 
 export default defineComponent({
   name: 'Tab2',
@@ -40,6 +41,7 @@ export default defineComponent({
     return {
       apodArr: [],
       loaded: false,
+      apodArrKey: 'APOD_FROM_API_KEY',
     }
   },
   methods: {
@@ -47,15 +49,32 @@ export default defineComponent({
       const url = 'https://api.nasa.gov/planetary/apod?api_key=WpJlub0x6H6V2V5s4ryXm2j7LTES4HRhGrpAdPi2';
       fetch(url)
           .then(res => res.json())
-          .then(data => this.apodArr = data)
+          .then(async data => {
+            let array = JSON.parse((await Storage.get({key: this.apodArrKey})).value || '{}');
+            array.push(data);
+            array = JSON.stringify(array);
+            await Storage.set({
+              key: this.apodArrKey,
+              value: array,
+            });
+          })
           .catch(err => console.log(err.message))
-      this.loaded = true;
-    }
+    },
+    async parsePhotos() {
+      const res = JSON.parse((await Storage.get({ key: this.apodArrKey})).value || '{}');
+      if(res !== null) {
+        this.loaded = true;
+        this.apodArr = res;
+      }
+    },
   },
   setup() {
     return {
       calendar,
     }
+  },
+  mounted() {
+    this.fetchApodData();
   }
 })
 </script>

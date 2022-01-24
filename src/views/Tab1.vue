@@ -76,6 +76,7 @@ export default defineComponent({
   data() {
     return {
       photosArr: [],
+      photosApiKey: 'PHOTOS_FROM_API_KEY',
       cameraArr: [{ name: 'None'}, { name: 'All'}, { name: 'FHAZ'}, { name: 'RHAZ'}, { name:'MAST'}, { name:'NAVCAM'}, { name:'CHEMCAM'}],
       selectedCam: '',
       loaded: false,
@@ -90,7 +91,7 @@ export default defineComponent({
           .then(data => {
             const array = JSON.stringify(data.photos);
             Storage.set({
-              key: 'PHOTOS_FROM_API_KEY',
+              key: this.photosApiKey,
               value: array,
             });
           })
@@ -106,7 +107,7 @@ export default defineComponent({
       (this.$refs.myContent as any).scrollToTop(200);
     },
     async parsePhotos() {
-      const res = JSON.parse((await Storage.get({ key: 'PHOTOS_FROM_API_KEY'})).value || '{}');
+      const res = JSON.parse((await Storage.get({ key: this.photosApiKey})).value || '{}');
       if(res !== null) {
         this.photosArr = res;
       }
