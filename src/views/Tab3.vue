@@ -1,35 +1,36 @@
 <template>
   <ion-page>
-    <ion-content class="ion-padding-top">
-      <ion-list v-if="loaded" class="ion-margin-top">
-        <ion-label class="ion-text-center ion-color-danger" v-if="apodArr === null">
-          No data in storage, error!
-        </ion-label>
-        <ion-item @click="setOpen(true)">
-          <ion-label class="ion-text-start" :value="apodArr.title">{{ apodArr.title }}</ion-label>
-          <ion-label class="ion-text-end" :value="apodArr.date">{{ apodArr.date }}</ion-label>
+      <ion-content class="ion-padding-top">
+        <ion-card-title class="ion-text-center ion-padding-top">History of APODs</ion-card-title>
+        <ion-list v-if="loaded" class="ion-margin-top">
+          <ion-label class="ion-text-center ion-color-danger" v-if="apodArr === null">
+            No data in storage, error!
+          </ion-label>
+          <ion-item @click="setOpen(true)">
+            <ion-label class="ion-text-start" :value="apodArr.title">{{ apodArr.title }}</ion-label>
+            <ion-label class="ion-text-end" :value="apodArr.date">{{ apodArr.date }}</ion-label>
 
-          <ion-modal :is-open="isModalOpen"
-                     :swipe-to-close="true"
-                     :initialBreakpoint="0.5"
-                     @didDismiss="setOpen(false)" class="ion-margin-vertical">
-            <history-detail :array="apodArr"></history-detail>
-          </ion-modal>
-        </ion-item>
-      </ion-list>
-    </ion-content>
+            <ion-modal :is-open="isModalOpen"
+                       :swipe-to-close="true"
+                       :initialBreakpoint="0.5"
+                       @didDismiss="setOpen(false)" class="ion-margin-vertical">
+              <history-detail :array="apodArr"></history-detail>
+            </ion-modal>
+          </ion-item>
+        </ion-list>
+      </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
-import { IonPage, IonContent, IonList, IonItem, IonLabel, IonModal } from "@ionic/vue";
+import { IonPage, IonContent, IonList, IonItem, IonLabel, IonModal, IonCardTitle } from "@ionic/vue";
 import { Storage } from "@capacitor/storage";
 import { defineComponent, ref } from "vue";
 import HistoryDetail from "@/components/HistoryDetail.vue";
 
 export default defineComponent( {
   name: "Tab3",
-  components: { IonPage, IonContent, IonList, IonItem, IonLabel, IonModal, HistoryDetail },
+  components: { IonPage, IonContent, IonList, IonItem, IonLabel, IonModal, HistoryDetail, IonCardTitle },
   data() {
     return {
       loaded: false,
@@ -40,7 +41,7 @@ export default defineComponent( {
   methods: {
     async parsePhotos() {
       const res = JSON.parse((await Storage.get({ key: this.apodArrKey})).value || '{}');
-      if(res !== null) {
+      if(res !== null || res.length !== 0) {
         this.toggleLoaded();
         this.apodArr = res;
       }

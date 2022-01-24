@@ -1,7 +1,10 @@
 <template>
   <ion-page>
     <ion-content :fullscreen="true" class="ion-margin">
-      <ion-grid class="ion-padding">
+      <ion-grid class="ion-padding ion-justify-content-center">
+        <ion-row class="ion-padding-top">
+          <ion-card-title class="ion-text-center ion-padding">Astronomy Picture Of Day</ion-card-title>
+        </ion-row>
         <ion-row class="ion-margin-vertical" v-if="loaded === false">
           <ion-col class="ion-text-center">
             <ion-button color="dark" @click="parsePhotos">Get APOD</ion-button>
@@ -50,12 +53,15 @@ export default defineComponent({
       fetch(url)
           .then(res => res.json())
           .then(async data => {
-            let array = JSON.parse((await Storage.get({key: this.apodArrKey})).value || '{}');
-            array.push(data);
-            array = JSON.stringify(array);
+            //let array = [];
+            //array = JSON.parse((await Storage.get({key: this.apodArrKey})).value || '{}');
+            //if(array !== null || array.length !== 0) {
+            //  array.concat(data);
+            //}
+            const stringArray = JSON.stringify(data);
             await Storage.set({
               key: this.apodArrKey,
-              value: array,
+              value: stringArray,
             });
           })
           .catch(err => console.log(err.message))
