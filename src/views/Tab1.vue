@@ -26,6 +26,9 @@
       <!-- Grid If camera is selected -->
       <ion-grid v-if="loaded">
         <ion-row class="ion-align-items-center" v-for="pic in photosArr" :key="pic.id">
+          <ion-col class="ion-text-center" v-if="pic === null">
+            <ion-label class="ion-color-danger">No data in storage, error!</ion-label>
+          </ion-col>
           <!-- Components template to render pictures in-->
           <ion-col size="12" v-if="selectedCam === pic.camera.name">
             <!-- Selected specific camera name -->
@@ -64,6 +67,8 @@ import { IonPage, IonContent, IonGrid, IonCol, IonRow, IonItem, IonLabel, IonSel
 import { defineComponent } from 'vue';
 import { arrowUpCircle } from 'ionicons/icons';
 import RoverCard from "@/components/RoverCard.vue";
+import { Storage } from "@capacitor/storage";
+//import { SplashScreen } from "@capacitor/splash-screen";
 
 export default defineComponent({
   name: 'Tab1',
@@ -72,8 +77,9 @@ export default defineComponent({
     return {
       photosArr: [],
       cameraArr: [{ name: 'None'}, { name: 'All'}, { name: 'FHAZ'}, { name: 'RHAZ'}, { name:'MAST'}, { name:'NAVCAM'}, { name:'CHEMCAM'}],
-      selectedCam: String,
+      selectedCam: '',
       loaded: false,
+
     };
   },
   methods: {
@@ -81,8 +87,15 @@ export default defineComponent({
       const url = "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=WpJlub0x6H6V2V5s4ryXm2j7LTES4HRhGrpAdPi2";
       fetch(url)
           .then(res => res.json())
-          .then(data => this.photosArr = data.photos)
+          .then(data => {
+            const array = JSON.stringify(data.photos);
+            Storage.set({
+              key: 'PHOTOS_FROM_API_KEY',
+              value: array,
+            });
+          })
           .catch(err => console.log(err.message))
+      //await SplashScreen.hide();
     },
     toggleLoaded() {
       this.loaded = true;
@@ -92,10 +105,16 @@ export default defineComponent({
       // but in IDE it is defined as ionic function
       (this.$refs.myContent as any).scrollToTop(200);
     },
+    async parsePhotos() {
+      const res = JSON.parse((await Storage.get({ key: 'PHOTOS_FROM_API_KEY'})).value || '{}');
+      if(res !== null) {
+        this.photosArr = res;
+      }
+    }
   },
   mounted() {
     this.fetchRovers();
-    //this.handleFabClick();
+    this.parsePhotos();
   },
   setup() {
     return {

@@ -8,6 +8,5 @@ Mars weather app is native iOS mobile application with 3 tabs. App is built with
 * Native iOS development
 ***
 ### API's
-* NASA Mars Weather API
+* NASA APOD API
 * NASA Rovers pictures API
-* Maybe will use Unsplash API later
