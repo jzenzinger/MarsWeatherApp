@@ -1,4 +1,4 @@
-# Mars Weather Mobile Application
+# Mars and Astronomy Mobile Application
 Mars weather app is native iOS mobile application with 3 tabs. App is built with IonicFramework for school project **Programming Mobile Applications**.
 ### Technologies
 * Ionic Framework
