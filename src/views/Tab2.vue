@@ -49,7 +49,7 @@ export default defineComponent({
   },
   methods: {
     async fetchApodData() {
-      const url = 'https://api.nasa.gov/planetary/apod?api_key=WpJlub0x6H6V2V5s4ryXm2j7LTES4HRhGrpAdPi2';
+      const url = 'https://api.nasa.gov/planetary/apod?api_key=INSERT_YOUR_API_KEY';
       fetch(url)
           .then(res => res.json())
           .then(async data => {
