@@ -85,7 +85,7 @@ export default defineComponent({
   },
   methods: {
     fetchRovers() {
-      const url = "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=WpJlub0x6H6V2V5s4ryXm2j7LTES4HRhGrpAdPi2";
+      const url = "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=INSERT_YOUR_API_KEY";
       fetch(url)
           .then(res => res.json())
           .then(data => {
