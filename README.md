@@ -6,6 +6,7 @@ Mars weather app is native iOS mobile application with 3 tabs. App is built with
 * TypeScript
 * Capacitor
 * Native iOS development
+* Capacitor Storage
 ***
 ### API's
 * NASA APOD API
